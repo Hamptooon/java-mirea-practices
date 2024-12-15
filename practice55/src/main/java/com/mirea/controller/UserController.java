@@ -14,11 +14,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-//    @GetMapping
-//    public ResponseEntity<UserEntity> getUserById(@RequestParam int id) {
-//        UserEntity user = userService.getUser(id);
-//        return ResponseEntity.ok(user);
-//    }
     @GetMapping
     public ResponseEntity<UserEntity> getUserById(
             @RequestParam(required = false) Integer id,
@@ -26,7 +21,7 @@ public class UserController {
 
         int userId = (id != null) ? id : (userRequest != null ? userRequest.getId() : -1);
         if (userId == -1) {
-            return ResponseEntity.badRequest().body(null); // Возвращаем ошибку, если id не передан
+            return ResponseEntity.badRequest().body(null);
         }
 
         UserEntity user = userService.getUser(userId);
@@ -36,12 +31,6 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<UserEntity> getUserByJson(@RequestBody UserRequest userRequest) {
-        UserEntity user = userService.getUser(userRequest.getId());
-        return ResponseEntity.ok(user);
-    }
-
-    @PostMapping("/add")
     public ResponseEntity<UserEntity> addUser(@RequestBody UserRequest userRequest) {
         UserEntity user = userService.addUser(userRequest);
         return ResponseEntity.ok(user);
